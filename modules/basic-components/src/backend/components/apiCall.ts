@@ -18,7 +18,7 @@ const generateFlow = async (): Promise<any> => {
 }
 
 const createNodes = () => {
-  const nodes: sdk.FlowNode[] = [
+  const nodes: any[] = [
     {
       id: prettyId(),
       name: 'entry',
@@ -57,6 +57,55 @@ const createNodes = () => {
       ],
       onReceive: null,
       type: 'standard'
+    },
+    {
+      id: 'skill-d73632',
+      type: 'skill-call',
+      skill: 'CallAPI',
+      name: 'call_from_previous_answer',
+      flow: 'skills/call_from_previous_answer.flow.json',
+      next: [
+        {
+          caption: 'On success',
+          condition: 'temp.valid_yqw4b030nu',
+          node: 'show_output'
+        },
+        {
+          caption: 'On failure',
+          condition: '!temp.valid_yqw4b030nu',
+          node: 'retry'
+        }
+      ],
+      onEnter: null,
+      onReceive: null
+    },
+    {
+      id: 'skill-294337',
+      type: 'skill-call',
+      skill: 'choice',
+      name: 'retry',
+      flow: 'skills/show_output_api.flow.json',
+      next: [
+        {
+          caption: 'User picked [yes]',
+          condition: 'temp[\'skill-choice-ret-32yypzxouo\'] == "yes"',
+          node: 'entry'
+        },
+        {
+          caption: 'User picked [no]',
+          condition: 'temp[\'skill-choice-ret-32yypzxouo\'] == "no"',
+          conditionType: 'raw',
+          node: 'END'
+        },
+        {
+          caption: 'On failure',
+          condition: 'true',
+          conditionType: 'always',
+          node: 'END'
+        }
+      ],
+      onEnter: null,
+      onReceive: null
     }
   ]
   return nodes
@@ -75,8 +124,10 @@ const skillsFlow = () => {
   const flow: any[] = [
     {
       skill: 'CallAPI',
-      name: 'call_from_previous_anwser',
-      startNode: 'call_from_previous_anwser',
+      name: 'call_from_previous_answer',
+      startNode: 'call_from_previous_answer',
+      flow: 'call_from_previous_answer.flow.json',
+      location: 'skills/call_from_previous_answer.flow.json',
       skillData: {
         randomId: prettyId(),
         method: 'post',
@@ -90,8 +141,10 @@ const skillsFlow = () => {
     },
     {
       skill: 'choice',
-      name: 'show_output',
-      startNode: 'show_output',
+      name: 'show_output_api',
+      startNode: 'show_output_api',
+      flow: 'show_output_api.flow.json',
+      location: 'skills/show_output_api.flow.json',
       skillData: {
         randomId: prettyId(),
         invalidContentId: '',
