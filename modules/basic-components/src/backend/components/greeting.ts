@@ -16,17 +16,19 @@ const generateFlow = async (): Promise<sdk.FlowGenerationResult> => {
 }
 
 const createNodes = () => {
-  const nodes: sdk.FlowNode[] = [
+  const nodes: any[] = [
     {
       id: prettyId(),
       name: 'entry',
       next: [
         {
           condition: 'event.state.session.greeted',
-          node: 'END'
+          conditionType: 'raw',
+          node: 'your_next_node'
         },
         {
           condition: 'true',
+          conditionType: 'always',
           node: 'store_greeting'
         }
       ],
@@ -39,10 +41,46 @@ const createNodes = () => {
       next: [
         {
           condition: 'true',
-          node: 'END'
+          conditionType: 'always',
+          node: 'Greeting'
         }
       ],
       onEnter: ['builtin/setVariable {"type":"session","name":"greeted","value":"true"}'],
+      onReceive: null,
+      type: 'standard'
+    },
+    {
+      id: prettyId(),
+      name: 'Greeting',
+      next: [
+        {
+          condition: 'true',
+          node: ''
+        }
+      ],
+      onEnter: [
+        {
+          contentType: 'builtin_text',
+          formData: {
+            text$en: "Hello I'm your conversation A.I. I was built to say hello to you.  one time",
+            markdown$en: true,
+            typing$en: true
+          }
+        }
+      ],
+      onReceive: null,
+      type: 'standard'
+    },
+    {
+      id: prettyId(),
+      name: 'your_next_node',
+      next: [
+        {
+          condition: 'true',
+          node: ''
+        }
+      ],
+      onEnter: [],
       onReceive: null,
       type: 'standard'
     }

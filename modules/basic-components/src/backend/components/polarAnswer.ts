@@ -17,7 +17,7 @@ const generateFlow = async (): Promise<any> => {
 
 const createNodes = () => {
   // cat main.flow.json | jq '.nodes | .[] | select(has("skill") | not)'
-  const nodes: sdk.SkillFlowNode[] = [
+  const nodes: any[] = [
     {
       id: prettyId(),
       name: 'yes-answer',
@@ -71,8 +71,9 @@ const createNodes = () => {
     {
       id: 'skill-fe0bb7',
       type: 'skill-call',
+      skill: 'choice',
       name: 'choice-yes',
-      flow: 'skills/show_output.json',
+      flow: 'skills/show_output.flow.json',
       next: [
         {
           caption: 'User picked [yes]',
@@ -101,9 +102,9 @@ const skillsFlow = () => {
     {
       startNode: 'entry',
       skill: 'choice',
-      flow: 'show_output',
+      flow: 'show_output.flow.json',
       name: 'show_output',
-      location: 'skills/show_output.json',
+      location: 'skills/show_output.flow.json',
       skillData: {
         randomId: 'show_output',
         invalidContentId: '',
