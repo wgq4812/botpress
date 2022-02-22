@@ -41,7 +41,7 @@ const createNodes = () => {
       onReceive: ['builtin/setVariable {"type":"temp","name":"flavor","value":"{{event.payload.text}}"}']
     },
     {
-      id: '6806a1521a',
+      id: prettyId(),
       name: 'show_output',
       next: [
         {
