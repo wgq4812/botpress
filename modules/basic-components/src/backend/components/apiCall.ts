@@ -31,7 +31,7 @@ const createNodes = () => {
       onEnter: <any>[
         {
           contentType: 'builtin_text',
-          FormData: {
+          formData: {
             text$en: "Ask Question - What's your favorite ice cream Flavor ?",
             markdown$en: true,
             typing$en: true
