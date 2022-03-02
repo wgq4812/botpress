@@ -145,8 +145,27 @@ const skillsFlow = () => {
       startNode: 'show_output_api',
       flow: 'show_output_api.flow.json',
       location: 'skills/show_output_api.flow.json',
+      contentType: {
+        contentType: 'builtin_single-choice',
+        formData: {
+          dropdownPlaceholder$en: 'Select...',
+          choices$en: [
+            {
+              title: 'Vanilla',
+              value: 'vanilla'
+            },
+            {
+              title: 'Strawberry',
+              value: 'strawberry'
+            }
+          ],
+          markdown$en: true,
+          disableFreeText$en: false,
+          typing$en: true,
+          text$en: 'Favorite ice cream'
+        }
+      },
       skillData: {
-        randomId: prettyId(),
         invalidContentId: '',
         keywords: {
           yes: ['yes', 'Yes'],
@@ -162,4 +181,5 @@ const skillsFlow = () => {
   ]
   return flow
 }
+
 export default { generateFlow }

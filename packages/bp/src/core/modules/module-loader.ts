@@ -41,7 +41,6 @@ const MODULE_SCHEMA = joi.object().keys({
   onFlowRenamed: joi.func().optional(),
   onElementChanged: joi.func().optional(),
   skills: joi.array().optional(),
-  components: joi.array().optional(),
   translations: joi.object().optional(),
   botTemplates: joi.array().optional(),
   dialogConditions: joi.array().optional(),
